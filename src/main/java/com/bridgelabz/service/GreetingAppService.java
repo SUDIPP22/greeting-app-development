@@ -23,6 +23,7 @@ public class GreetingAppService {
     private static final String GREETING_MESSAGES_NOT_FOUND = "Greeting Message is not found by the id";
     private static final String GREETING_MESSAGE_EDITED = "Greeting Message is edited";
     private static final String GREETING_MESSAGE_DELETED = "Greeting Message is successfully deleted";
+    private static final String GREETING_MESSAGES_FOUND = "Greeting Message is found by the id";
     @Autowired
     private GreetingAppRepository greetingAppRepository;
 
@@ -41,7 +42,7 @@ public class GreetingAppService {
      * @param greetingAppDto : greeting data from client
      * @return greeting message to the repository
      */
-    public GreetingAppEntity saveMessage(GreetingAppDto greetingAppDto) {
+    public GreetingAppEntity saveMessages(GreetingAppDto greetingAppDto) {
         GreetingAppEntity greetingAppEntity = new GreetingAppEntity();
         greetingAppEntity.setMessage(greetingAppDto.getMessage());
         return greetingAppRepository.save(greetingAppEntity);
@@ -53,12 +54,12 @@ public class GreetingAppService {
      * @param id : provided greeting message by unique id
      * @return greeting message is found by id or not
      */
-    public String findMessageById(int id) {
-        Optional<GreetingAppEntity> greetingAppEntity = greetingAppRepository.findById(id);
-        if (greetingAppEntity.isPresent()) {
-            return "The Greeting Message is found by id : " + id;
+    public String findMessagesById(int id) {
+        Optional<GreetingAppEntity> greetingMessageById = greetingAppRepository.findById(id);
+        if (greetingMessageById.isPresent()) {
+            return GREETING_MESSAGES_FOUND + " : " + id;
         }
-        return "The Greeting Message is not found by id : " + id;
+        return GREETING_MESSAGES_NOT_FOUND + " : " + id;
     }
 
     /**
@@ -66,7 +67,7 @@ public class GreetingAppService {
      *
      * @return the list of all messages
      */
-    public List<GreetingAppEntity> messagesByList() {
+    public List<GreetingAppEntity> getMessagesByList() {
         return greetingAppRepository.findAll();
     }
 
@@ -77,12 +78,12 @@ public class GreetingAppService {
      * @param greetingAppDto : greeting app data from the client
      * @return updated greeting message
      */
-    public String editGreetingMessage(int id, GreetingAppDto greetingAppDto) {
-        Optional<GreetingAppEntity> greetingAppEntity = greetingAppRepository.findById(id);
-        if (greetingAppEntity.isPresent()) {
-            GreetingAppEntity greetingAppEntity1 = greetingAppEntity.get();
-            greetingAppEntity1.setMessage(greetingAppDto.getMessage());
-            greetingAppRepository.save(greetingAppEntity1);
+    public String editGreetingMessages(int id, GreetingAppDto greetingAppDto) {
+        Optional<GreetingAppEntity> greetingMessageById = greetingAppRepository.findById(id);
+        if (greetingMessageById.isPresent()) {
+            GreetingAppEntity greetingAppEntity = greetingMessageById.get();
+            greetingAppEntity.setMessage(greetingAppDto.getMessage());
+            greetingAppRepository.save(greetingAppEntity);
             return GREETING_MESSAGE_EDITED;
         }
         return GREETING_MESSAGES_NOT_FOUND;
@@ -95,9 +96,9 @@ public class GreetingAppService {
      * @return status of the deleted message
      */
     public String deleteGreetingMessages(int id) {
-        Optional<GreetingAppEntity> greetingAppEntity = greetingAppRepository.findById(id);
-        if (greetingAppEntity.isPresent()) {
-            greetingAppRepository.delete(greetingAppEntity.get());
+        Optional<GreetingAppEntity> greetingMessage = greetingAppRepository.findById(id);
+        if (greetingMessage.isPresent()) {
+            greetingAppRepository.delete(greetingMessage.get());
             return GREETING_MESSAGE_DELETED;
         }
         return GREETING_MESSAGES_NOT_FOUND;

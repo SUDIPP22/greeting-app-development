@@ -64,19 +64,19 @@ public class GreetingAppController {
     public GreetingAppEntity saveGreetingMessage(
             @RequestBody GreetingAppDto greetingAppDto
     ) {
-        return greetingAppService.saveMessage(greetingAppDto);
+        return greetingAppService.saveMessages(greetingAppDto);
     }
 
     @GetMapping("/greetingMessage/{id}")
     public String findGreetingMessageById(
             @PathVariable int id
     ) {
-        return greetingAppService.findMessageById(id);
+        return greetingAppService.findMessagesById(id);
     }
 
     @GetMapping("/greetingListMessage")
     public List<GreetingAppEntity> greetingMessagesByList() {
-        return greetingAppService.messagesByList();
+        return greetingAppService.getMessagesByList();
     }
 
     @PutMapping("/edited-greeting-message/{id}")
@@ -84,7 +84,7 @@ public class GreetingAppController {
             @PathVariable int id,
             @RequestBody GreetingAppDto greetingAppDto
     ) {
-        return greetingAppService.editGreetingMessage(id, greetingAppDto);
+        return greetingAppService.editGreetingMessages(id, greetingAppDto);
     }
 
     @DeleteMapping("/delete-greeting-message")
