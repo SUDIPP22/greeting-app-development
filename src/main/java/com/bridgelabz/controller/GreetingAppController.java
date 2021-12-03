@@ -86,4 +86,11 @@ public class GreetingAppController {
     ) {
         return greetingAppService.editGreetingMessage(id, greetingAppDto);
     }
+
+    @DeleteMapping("/delete-greeting-message")
+    public String deleteGreetingMessage(
+            @RequestParam int id
+    ) {
+        return greetingAppService.deleteGreetingMessages(id);
+    }
 }

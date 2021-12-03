@@ -22,6 +22,7 @@ public class GreetingAppService {
 
     private static final String GREETING_MESSAGES_NOT_FOUND = "Greeting Message is not found by the id";
     private static final String GREETING_MESSAGE_EDITED = "Greeting Message is edited";
+    private static final String GREETING_MESSAGE_DELETED = "Greeting Message is successfully deleted";
     @Autowired
     private GreetingAppRepository greetingAppRepository;
 
@@ -83,6 +84,21 @@ public class GreetingAppService {
             greetingAppEntity1.setMessage(greetingAppDto.getMessage());
             greetingAppRepository.save(greetingAppEntity1);
             return GREETING_MESSAGE_EDITED;
+        }
+        return GREETING_MESSAGES_NOT_FOUND;
+    }
+
+    /**
+     * Purpose : To delete the greeting messages in the greeting app repository by providing the unique id
+     *
+     * @param id : unique id of the greeting message
+     * @return status of the deleted message
+     */
+    public String deleteGreetingMessages(int id) {
+        Optional<GreetingAppEntity> greetingAppEntity = greetingAppRepository.findById(id);
+        if (greetingAppEntity.isPresent()) {
+            greetingAppRepository.delete(greetingAppEntity.get());
+            return GREETING_MESSAGE_DELETED;
         }
         return GREETING_MESSAGES_NOT_FOUND;
     }
