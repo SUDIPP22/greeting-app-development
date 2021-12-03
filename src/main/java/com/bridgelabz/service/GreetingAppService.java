@@ -1,5 +1,9 @@
 package com.bridgelabz.service;
 
+import com.bridgelabz.dto.GreetingAppDto;
+import com.bridgelabz.entity.GreetingAppEntity;
+import com.bridgelabz.repository.GreetingAppRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class GreetingAppService {
 
+    @Autowired
+    GreetingAppRepository greetingAppRepository;
+
     /**
      * Purpose : To invoke a simple message
      *
@@ -20,5 +27,17 @@ public class GreetingAppService {
      */
     public String getMessage() {
         return "Hello World";
+    }
+
+    /**
+     * Purpose : To save the greeting message to the database
+     *
+     * @param greetingAppDto : greeting data from client
+     * @return greeting message to the repository
+     */
+    public GreetingAppEntity saveMessage(GreetingAppDto greetingAppDto) {
+        GreetingAppEntity greetingAppEntity = new GreetingAppEntity();
+        greetingAppEntity.setMessage(greetingAppDto.getMessage());
+        return greetingAppRepository.save(greetingAppEntity);
     }
 }
