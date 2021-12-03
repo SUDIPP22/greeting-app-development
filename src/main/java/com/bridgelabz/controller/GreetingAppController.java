@@ -78,4 +78,12 @@ public class GreetingAppController {
     public List<GreetingAppEntity> greetingMessagesByList() {
         return greetingAppService.messagesByList();
     }
+
+    @PutMapping("/edited-greeting-message/{id}")
+    public String editGreetingMessage(
+            @PathVariable int id,
+            @RequestBody GreetingAppDto greetingAppDto
+    ) {
+        return greetingAppService.editGreetingMessage(id, greetingAppDto);
+    }
 }

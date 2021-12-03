@@ -20,6 +20,8 @@ import java.util.Optional;
 @Service
 public class GreetingAppService {
 
+    private static final String GREETING_MESSAGES_NOT_FOUND = "Greeting Message is not found by the id";
+    private static final String GREETING_MESSAGE_EDITED = "Greeting Message is edited";
     @Autowired
     private GreetingAppRepository greetingAppRepository;
 
@@ -65,5 +67,23 @@ public class GreetingAppService {
      */
     public List<GreetingAppEntity> messagesByList() {
         return greetingAppRepository.findAll();
+    }
+
+    /**
+     * Purpose : To edit the greeting messages in the greeting app repository
+     *
+     * @param id             : unique id of the greeting message
+     * @param greetingAppDto : greeting app data from the client
+     * @return updated greeting message
+     */
+    public String editGreetingMessage(int id, GreetingAppDto greetingAppDto) {
+        Optional<GreetingAppEntity> greetingAppEntity = greetingAppRepository.findById(id);
+        if (greetingAppEntity.isPresent()) {
+            GreetingAppEntity greetingAppEntity1 = greetingAppEntity.get();
+            greetingAppEntity1.setMessage(greetingAppDto.getMessage());
+            greetingAppRepository.save(greetingAppEntity1);
+            return GREETING_MESSAGE_EDITED;
+        }
+        return GREETING_MESSAGES_NOT_FOUND;
     }
 }
