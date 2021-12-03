@@ -6,6 +6,7 @@ import com.bridgelabz.repository.GreetingAppRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Optional;
 public class GreetingAppService {
 
     @Autowired
-    GreetingAppRepository greetingAppRepository;
+    private GreetingAppRepository greetingAppRepository;
 
     /**
      * Purpose : To invoke a simple message
@@ -55,5 +56,14 @@ public class GreetingAppService {
             return "The Greeting Message is found by id : " + id;
         }
         return "The Greeting Message is not found by id : " + id;
+    }
+
+    /**
+     * Purpose : To list all the greeting messages in the greeting repository
+     *
+     * @return the list of all messages
+     */
+    public List<GreetingAppEntity> messagesByList() {
+        return greetingAppRepository.findAll();
     }
 }
