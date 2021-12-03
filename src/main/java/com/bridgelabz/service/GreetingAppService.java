@@ -6,6 +6,8 @@ import com.bridgelabz.repository.GreetingAppRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * Purpose : To demonstrate business logic
  * which implements all the methods in controller layer
@@ -39,5 +41,19 @@ public class GreetingAppService {
         GreetingAppEntity greetingAppEntity = new GreetingAppEntity();
         greetingAppEntity.setMessage(greetingAppDto.getMessage());
         return greetingAppRepository.save(greetingAppEntity);
+    }
+
+    /**
+     * Purpose : To find the greeting message by id
+     *
+     * @param id : provided greeting message by unique id
+     * @return greeting message is found by id or not
+     */
+    public String findMessageById(int id) {
+        Optional<GreetingAppEntity> greetingAppEntity = greetingAppRepository.findById(id);
+        if (greetingAppEntity.isPresent()) {
+            return "The Greeting Message is found by id : " + id;
+        }
+        return "The Greeting Message is not found by id : " + id;
     }
 }
