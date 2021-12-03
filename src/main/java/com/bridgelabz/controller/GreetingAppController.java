@@ -40,4 +40,19 @@ public class GreetingAppController {
     public String getMessage() {
         return greetingAppService.getMessage();
     }
+
+    @GetMapping("/greeting5/{name}")
+    public String getMessageUsingPathVariable(
+            @PathVariable String name
+    ) {
+        return name + " , " + greetingAppService.getMessage();
+    }
+
+    @GetMapping("/greeting6")
+    public String getMessageUsingQueryParameter(
+            @RequestParam String firstName,
+            @RequestParam String lastName
+    ) {
+        return greetingAppService.getMessage() + " , " + firstName + " " + lastName;
+    }
 }
